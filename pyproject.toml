@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pci-asv-readiness-mcp"
+version = "0.4.0"
+description = "MCP server for assessing Tenable PCI Quarterly External scan readiness before ASV attestation"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=1.0.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Repository = "https://github.com/amcdonnell-dot/pci-asv-readiness-mcp"
+
+[project.scripts]
+pci-asv-readiness-mcp = "server:main"
+
+[tool.setuptools]
+# Explicit discovery: agents/ holds a subagent definition (markdown), not a
+# Python package — without this, setuptools flat-layout auto-discovery refuses
+# to build ("Multiple top-level packages discovered").
+packages = ["pci_asv_readiness"]
+py-modules = ["server", "smoke_test"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
